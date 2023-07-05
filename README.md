@@ -3,7 +3,23 @@
 ![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20OS%20X-blue.svg)
 ![Package Managers](https://img.shields.io/badge/package%20managers-SwiftPM-yellow.svg)
 
-A fork of the [FluentPostGIS](https://github.com/plarson/fluent-postgis) package which adds support for geographic queries. FluentPostGIS provides PostGIS support for [fluent-postgres-driver](https://github.com/vapor/fluent-postgres-driver) and [Vapor 4](https://github.com/vapor/vapor).
+
+
+A fork of the [FluentPostGIS](https://github.com/brokenhandsio/fluent-postgis), with is a for of the original [FluentPostGIS](https://github.com/plarson/fluent-postgis) package which adds support for geographic queries. FluentPostGIS provides PostGIS support for [fluent-postgres-driver](https://github.com/vapor/fluent-postgres-driver) and [Vapor 4](https://github.com/vapor/vapor).
+Main feature — added initialization from json
+
+Json
+```
+"location" : {
+     "longitude" : 12.694644422012956,
+     "latitude" :  12.38693920847816
+} 
+```
+
+Decoding
+```
+let location = try req.content.decode(GeographicPoint2D.self)
+```
 
 # Installation
 
