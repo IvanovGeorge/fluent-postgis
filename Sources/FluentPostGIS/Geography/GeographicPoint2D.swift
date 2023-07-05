@@ -7,6 +7,19 @@ public struct GeographicPoint2D: Codable, Equatable, CustomStringConvertible {
 
     /// The point's y coordinate.
     public var latitude: Double
+    
+    /// Coding keys
+     private enum CodingKeys: CodingKey {
+        case longitude, latitude
+    }
+
+    /// Create a new `GISGeographicPoint2D` from json
+    public init(from decoder: Decoder) throws {
+        // Person.init(from:) is being used here!
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        latitude = try container.decode(Double.self, forKey: .latitude)
+        longitude = try container.decode(Double.self, forKey: .longitude)
+    }
 
     /// Create a new `GISGeographicPoint2D`
     public init(longitude: Double, latitude: Double) {
