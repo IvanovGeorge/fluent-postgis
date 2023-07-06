@@ -14,12 +14,19 @@ public struct GeographicPoint2D: Codable, Equatable, CustomStringConvertible {
     }
 
     /// Create a new `GISGeographicPoint2D` from json
-    public init(from decoder: Decoder) throws {
-        // Person.init(from:) is being used here!
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let latitude = try container.decode(Double.self, forKey: .latitude)
-        let longitude = try container.decode(Double.self, forKey: .longitude)
-        self.init(longitude: latitude, latitude: longitude)
+      public init(from decoder: Decoder) throws {
+        // Universal decoder from json / wkb
+        do {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let latitude = try container.decode(Double.self, forKey: .latitude)
+            let longitude = try container.decode(Double.self, forKey: .longitude)
+            self.init(longitude: latitude, latitude: longitude)
+        } catch {
+            let value = try decoder.singleValueContainer().decode(Data.self)
+            let decoder = WKBDecoder()
+            let geometry: GeometryType = try decoder.decode(from: value)
+            self.init(geometry: geometry)
+        }
     }
 
     /// Create a new `GISGeographicPoint2D`
